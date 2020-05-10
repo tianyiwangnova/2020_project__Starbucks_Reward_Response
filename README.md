@@ -62,6 +62,8 @@ The transaction table looks like this:
 
 The chart below shows the logic of matching `offer_received` actions with `offer_viewed` actions:
 
+*Assume that a customer has in total 8 offers related transactions*
+
 ![logic](https://raw.githubusercontent.com/tianyiwangnova/2020_project__Starbucks_Reward_Response/master/screenshot/logic.png)
 
 We use this logic to match `offer-received` events with `offer-viewed` events and then match `offer-received` events and `offer-completed` events. Then we will match the 2 matched tables together.
@@ -108,7 +110,7 @@ Besides the demographic features and the promo features, we also built a few mor
 ![balance](https://raw.githubusercontent.com/tianyiwangnova/2020_project__Starbucks_Reward_Response/master/screenshot/completion%20rates.png)
 <br>In this project we are not facing data imbalance issue. Luckily there are no extremely small postive rates.
 
-> ### Results
+## Results
 
 For buy-one-get-one offers that weren't viewed, `cumulative purchase amount at the time the customer received the offer`, `customer's income level`, `"customer_age" (how long has the customer been with us)` and `hours since the last offer was completed are important factors`. **Customers who have higher income levels and who have already had some purchases with us** are more likely to complete the offer.
 
