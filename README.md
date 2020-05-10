@@ -109,13 +109,11 @@ Besides the demographic features and the promo features, we also built a few mor
 In this project we are not facing data imbalance issue. Luckily there are no extremely small postive rates.
 
 > ### Results
-![fi1](https://raw.githubusercontent.com/tianyiwangnova/2020_project__Starbucks_Reward_Response/master/screenshot/fi1.png)
 
 For buy-one-get-one offers that weren't viewed, `cumulative purchase amount at the time the customer received the offer`, `customer's income level`, `"customer_age" (how long has the customer been with us)` and `hours since the last offer was completed are important factors`. **Customers who have higher income levels and who have already had some purchases with us** are more likely to complete the offer.
 
 Important features for buy-one-get-one offers that were viewed are similar to the un-viewed group, except that here gender plays a bigger role. **Compared to male customers, female customers are more likely to complete the offer when they know about it.**
 
-![fi2]()
 
 For discount offers that weren't viewed, `cumulative purchase amount`, `customer's income level`, `whether this offer was sent through social channel` are important factors. It's interesting to see that **offers that were sent through social channels are more likely to be completed. (there are 2 such offers)**
 
@@ -123,11 +121,13 @@ For discount offers that were viewed, `customer age`, `cumulative purchase amoun
 
 # A senario to use the model...
 
-Since there's no cost for an offer just to be sent --- if the customer doesn't complete the offer, we don't lose any money. One way for us to use the model to improve revenue is to **predict who will complete the offer when they don't know about the offer and we don't send offers to those who will**. This might not be a good idea because although we improve revenue in this way, it might hurt our relationship with the customers in the long run. It depends on the marketing strategies and if we are looking to cut the spending on promos, our models can help a lot.
+Since there's no cost for an offer just to be sent --- if the customer doesn't complete the offer, we don't lose any money. One way for us to use the model to improve revenue is to **predict who will complete the offer without knowing it and we don't send offers to them**. This might not be a good idea because although we improve revenue in this way, it might hurt our relationship with the customers in the long run. It depends on the marketing strategies and if we are looking to cut the spending on promos, our models can help a lot.
 
 We trained 2 models, one on the bogo offers that were not viewed and another one on the discount offers that were not viewed. Assume that we plan to send an offer potentially to everyone tomorrow but we want to exclude the customers who have higher chances to complete the offer without knowing it. So we plan to use the past data till 10 days before to train the model to make sure that in the training data all offers have expired.
 
 ![flowchart]()
 
-In the notebook, we tried this process for the last recordsed date in the data --- pretended that in that last day we want to optimize our campaign using the data we had collected. We trained the models with the data from the beginning till 10 days before the last day and tested the models on the offers received on the last day but weren't viewed till they expired. Our model for buy-one-get-one offers reaches an AUC score of 0.84 and our model for discount offers has an AUC score of 0.88.
+In the notebook, we tried this process for the last recorded date in the data --- pretended that in that last day we wanted to optimize our campaign using the data we had collected. We trained the models with the data from the beginning till 10 days before the last day and tested the models on the offers received on the last day but weren't viewed till they expired. Our model for buy-one-get-one offers reaches an AUC score of 0.84 and our model for discount offers has an AUC score of 0.88.
+
+![result]()
 
