@@ -90,7 +90,7 @@ Combining the demographic data with the transaction data, we can now visualize w
 ![completetion_rates](https://raw.githubusercontent.com/tianyiwangnova/2020_project__Starbucks_Reward_Response/master/screenshot/demo_and_completion_rates.png)
 
 
-Female customers, older (> 35) customers, wealthier customers and customers who joined earlier are more valuable.
+**Female customers, older (> 35) customers, wealthier customers and customers who joined earlier are more valuable.**
 
 ## Predictive modeling
 
@@ -99,6 +99,7 @@ In the notebook `02 Modeling`,  we fit `gradient boosting classifers` on the 4 s
 * buy-one-get-one offers that were not viewed
 * discount offers that were viewed
 * discount offers that were not viewed
+
 <br>We used the feature importance matrixes to see which features are more useful when predicting whether the offers will be completed under difference circumstances.
 
 Besides the demographic features and the promo features, we also built a few more features that describe the customers' `purchase related behaviors`, including:
