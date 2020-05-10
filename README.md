@@ -1,8 +1,9 @@
-# 2020_project__Starbucks_Reward_Response
-
 # Starbucks Campaigns Analysis
 
-This is a Capstone project for Udacity Data Science Nanodegree parterning with Starbucks. In this project, we have a data set that contains simulated data that mimics customer behavior on the Starbucks rewards mobile app. We will combine transaction, demographic and offer data to determine which demographic groups respond best to which offer type.
+*Tianyi Wang*
+*2020 May*
+
+This is a Capstone project for Udacity Data Science Nanodegree parterning with Starbucks. In this project, we have simulated datasets that mimic customer behavior on the Starbucks rewards mobile app. We will combine transaction, demographic and offer data to determine which demographic groups respond best to which offer type.
 
 ## Background
 
@@ -16,14 +17,14 @@ However, there are a few things to watch out for in this data set. Customers do 
 ## Data
 
 Exploratory data analysis can be found in the notebook `01 Data Exploration`. There are 3 tables:
-`portfolio`: information of the offers 
-`profile`: demographic information of the customers
-`trancript`: transactions
-Let's take a quick look at each table:
+<br>`portfolio`: information of the offers 
+<br>`profile`: demographic information of the customers
+<br>`trancript`: transactions
+<br>Let's take a quick look at each table:
 
 ### Portfolio
 
-There are 10 different promotions that belong to 3 general types. There are 4 features that describe the promotions: channels, difficulty (money required to be spent to receive reward), duration and reward. We found out that **discount promotions usually have long durations and high difficulties while buy-one-get-one promotions have shorter durations and lower difficulties. Discount promotions will have higher reward.** In general, longer promotions will have higher difficulties.
+There are 10 different promotions that belong to 3 general types: informational, buy-one-get-one and discount. There are 4 features that describe the promotions: channels, difficulty (money required to be spent to receive reward), duration and reward. We found out that **discount promotions usually have long durations and high difficulties while buy-one-get-one promotions have shorter durations and lower difficulties. Discount promotions will have higher reward.** In general, longer promotions will have higher difficulties.
 
 ![promos]()
 
@@ -53,9 +54,11 @@ offer_received
 
 The transaction table looks like this:
 
-**Each person can receive the same type of offer for multiple times** and the offer id only tells what type of offer that is ---- it can't be used to recognize a unique offer. **Our challenge here is to match the various actions to tell if a certain offer was viewed or completed.** Also, customers might not received all types of offers.
+![trans](https://raw.githubusercontent.com/tianyiwangnova/2020_project__Starbucks_Reward_Response/master/screenshot/transaction.png)
 
-**We solve this problem by giving an order number of the transactions for each customer. The `offer id` plus the `rank` plus the `person id` can be seen as a "unique ID" for that offer.** We discovered that until the current offer expires, the app won't send another offer under the same type to that customer (we will prove this later). We will attribute the earlist following actions (view the offer or complete the offer) to the earliest offer (under the same offer id) with an extra condition that the following actions need to happen before that offer expires.
+**Each person can receive the same type of offer for multiple times** and the offer id only tells what type of offer that is ---- it can't be used to recognize a unique offer. **Our challenge here is to match the various actions to tell if a certain offer was viewed or completed.** Also, customers might not receive all types of offers.
+
+**We solve this problem by giving an order number of the transactions for each customer. The `offer id` plus the `rank` plus the `person id` can be seen as a "unique ID" for that offer.** We discovered that until the current offer expires, the app won't send another offer under the same type to that customer. We will attribute the earlist following actions (view the offer or complete the offer) to the earliest received offer (under the same offer id) with an extra condition that the following actions need to happen before that offer expires.
 
 The chart below shows the logic of matching `offer_received` actions with `offer_viewed` actions:
 
@@ -73,7 +76,7 @@ offer_received
 <br>&nbsp; &nbsp; &nbsp; |__ offer completed 7.5%
 <br>&nbsp; &nbsp; &nbsp; |__ offer not completed 18.34%
 
-3/4 of the offers can be viewed. More than 40% of the offers can be completed. The completion rate should be higher for just buy-one-get-one or discount offers though because informational offers won't need the customer to "complete". For buy-one-get-one offers and discount offers, the chance for an offer to be completed after the customer sees the offer is more than 50%. Discount offers are more likely to be completed when they are viewed but they will be less 
+3/4 of the offers can be viewed. More than 40% of the offers can be completed. The completion rate should be higher for just buy-one-get-one or discount offers though because informational offers won't need the customer to "complete". For buy-one-get-one offers and discount offers, the chance for an offer to be completed after the customer sees the offer is more than 50%. Discount offers are more likely to be completed when they are viewed but they will be less likely to be completed when they are not viewed (because they usually require higher purchase amount). 
 
 ![completetion]()
 
@@ -82,19 +85,19 @@ offer_received
 
 Combining the demographic data with the transaction data, we can now visualize which demographic groups are more likely to complete offers and which groups have higher net revenues.
 
-![completetion_rates]()
+![completetion_rates](https://raw.githubusercontent.com/tianyiwangnova/2020_project__Starbucks_Reward_Response/master/screenshot/demo_and_completion_rates.png)
 
 
 Female customers, older (> 35) customers, wealthier customers and customers who joined earlier are more valuable.
 
 ## Predictive modeling
 
-In the notebook `02 Modeling`,  we fit `gradient classifers` on the 4 subsets of data seperately:
+In the notebook `02 Modeling`,  we fit `gradient boosting classifers` on the 4 subsets of data seperately:
 * buy-one-get-one offers that were viewed
 * buy-one-get-one offers that were not viewed
 * discount offers that were viewed
 * discount offers that were not viewed
-We used the feature importance to see which features are more useful when predicting whether the offers will be completed under difference circumstances.
+<br>We used the feature importance matrixes to see which features are more useful when predicting whether the offers will be completed under difference circumstances.
 
 Besides the demographic features and the promo features, we also built a few more features that describe the customers' `purchase related behaviors`, including:
 <br>**offers_viewed_before:** at the time a person received an offer, how many offers they had seen before?
@@ -102,13 +105,13 @@ Besides the demographic features and the promo features, we also built a few mor
 <br>**hours_since_last_viewed:** at the time a person received an offer, how many hours have passed since the person viewed the last offer
 <br>**cum_amount:** at the time a person received an offer, how much money they had spent?
 
-![balance]()
+![balance](https://raw.githubusercontent.com/tianyiwangnova/2020_project__Starbucks_Reward_Response/master/screenshot/completion%20rates.png)
 In this project we are not facing data imbalance issue. Luckily there are no extremely small postive rates.
 
-> ### Conclusion
-![fi1]()
+> ### Results
+![fi1](https://raw.githubusercontent.com/tianyiwangnova/2020_project__Starbucks_Reward_Response/master/screenshot/fi1.png)
 
-For buy-one-get-one offers that weren't viewed, `cumulative purchase amount at the time the customer received the offer`, `customer's income level and "customer_age" (how long has the customer been with us)`, `hours since the last offer was completed are important factors`. **Customers who have higher income levels and who have already had some purchases with us** are more likely to complete the offer.
+For buy-one-get-one offers that weren't viewed, `cumulative purchase amount at the time the customer received the offer`, `customer's income level`, `"customer_age" (how long has the customer been with us)` and `hours since the last offer was completed are important factors`. **Customers who have higher income levels and who have already had some purchases with us** are more likely to complete the offer.
 
 Important features for buy-one-get-one offers that were viewed are similar to the un-viewed group, except that here gender plays a bigger role. **Compared to male customers, female customers are more likely to complete the offer when they know about it.**
 
@@ -118,13 +121,13 @@ For discount offers that weren't viewed, `cumulative purchase amount`, `customer
 
 For discount offers that were viewed, `customer age`, `cumulative purchase amount`, `gender`, `income level` and `time the offer was sent` are important factors. **We also see the pattern here that female customers are more likely to complete the offer when they have viewed the offer**. It seems that **customers who have completed some offers before the new offer are also more likely to complete the offer**.
 
-# # A senario to use the model...
+# A senario to use the model...
 
 Since there's no cost for an offer just to be sent --- if the customer doesn't complete the offer, we don't lose any money. One way for us to use the model to improve revenue is to **predict who will complete the offer when they don't know about the offer and we don't send offers to those who will**. This might not be a good idea because although we improve revenue in this way, it might hurt our relationship with the customers in the long run. It depends on the marketing strategies and if we are looking to cut the spending on promos, our models can help a lot.
 
-We will train 2 models, one on the bogo offers that were not viewed and another one on the discount offers that were not viewed. Assume that we want to determine what offers should be sent for tomorrow. So we plan to use the past data till 10 days before to train the model to make sure that in the training data all offers have expired.
+We trained 2 models, one on the bogo offers that were not viewed and another one on the discount offers that were not viewed. Assume that we plan to send an offer potentially to everyone tomorrow but we want to exclude the customers who have higher chances to complete the offer without knowing it. So we plan to use the past data till 10 days before to train the model to make sure that in the training data all offers have expired.
 
 ![flowchart]()
 
-Test our models on the data from the last day. Our model for buy-one-get-one offers reaches an AUC score of 0.84 and our model for discount offers has an AUC score of 0.88.
+In the notebook, we tried this process for the last recordsed date in the data --- pretended that in that last day we want to optimize our campaign using the data we had collected. We trained the models with the data from the beginning till 10 days before the last day and tested the models on the offers received on the last day but weren't viewed till they expired. Our model for buy-one-get-one offers reaches an AUC score of 0.84 and our model for discount offers has an AUC score of 0.88.
 
