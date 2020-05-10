@@ -26,7 +26,7 @@ Exploratory data analysis can be found in the notebook `01 Data Exploration`. Th
 
 There are 10 different promotions that belong to 3 general types: informational, buy-one-get-one and discount. There are 4 features that describe the promotions: channels, difficulty (money required to be spent to receive reward), duration and reward. We found out that **discount promotions usually have long durations and high difficulties while buy-one-get-one promotions have shorter durations and lower difficulties. Discount promotions will have higher reward.** In general, longer promotions will have higher difficulties.
 
-![promos]()
+![promos](https://raw.githubusercontent.com/tianyiwangnova/2020_project__Starbucks_Reward_Response/master/screenshot/promos.png)
 
 ### profile
 
@@ -62,7 +62,7 @@ The transaction table looks like this:
 
 The chart below shows the logic of matching `offer_received` actions with `offer_viewed` actions:
 
-![logic]()
+![logic](https://raw.githubusercontent.com/tianyiwangnova/2020_project__Starbucks_Reward_Response/master/screenshot/logic.png)
 
 We use this logic to match `offer-received` events with `offer-viewed` events and then match `offer-received` events and `offer-completed` events. Then we will match the 2 matched tables together.
 
@@ -78,7 +78,7 @@ offer_received
 
 3/4 of the offers can be viewed. More than 40% of the offers can be completed. The completion rate should be higher for just buy-one-get-one or discount offers though because informational offers won't need the customer to "complete". For buy-one-get-one offers and discount offers, the chance for an offer to be completed after the customer sees the offer is more than 50%. Discount offers are more likely to be completed when they are viewed but they will be less likely to be completed when they are not viewed (because they usually require higher purchase amount). 
 
-![completetion]()
+![completetion](https://raw.githubusercontent.com/tianyiwangnova/2020_project__Starbucks_Reward_Response/master/screenshot/cr%20by%20offers.png)
 
 
 ## Exploration -- which demographic groups are more valuable?
@@ -106,7 +106,7 @@ Besides the demographic features and the promo features, we also built a few mor
 <br>**cum_amount:** at the time a person received an offer, how much money they had spent?
 
 ![balance](https://raw.githubusercontent.com/tianyiwangnova/2020_project__Starbucks_Reward_Response/master/screenshot/completion%20rates.png)
-In this project we are not facing data imbalance issue. Luckily there are no extremely small postive rates.
+<br>In this project we are not facing data imbalance issue. Luckily there are no extremely small postive rates.
 
 > ### Results
 
@@ -125,9 +125,9 @@ Since there's no cost for an offer just to be sent --- if the customer doesn't c
 
 We trained 2 models, one on the bogo offers that were not viewed and another one on the discount offers that were not viewed. Assume that we plan to send an offer potentially to everyone tomorrow but we want to exclude the customers who have higher chances to complete the offer without knowing it. So we plan to use the past data till 10 days before to train the model to make sure that in the training data all offers have expired.
 
-![flowchart]()
+![flowchart](https://raw.githubusercontent.com/tianyiwangnova/2020_project__Starbucks_Reward_Response/master/screenshot/predict.png)
 
 In the notebook, we tried this process for the last recorded date in the data --- pretended that in that last day we wanted to optimize our campaign using the data we had collected. We trained the models with the data from the beginning till 10 days before the last day and tested the models on the offers received on the last day but weren't viewed till they expired. Our model for buy-one-get-one offers reaches an AUC score of 0.84 and our model for discount offers has an AUC score of 0.88.
 
-![result]()
+![result](https://raw.githubusercontent.com/tianyiwangnova/2020_project__Starbucks_Reward_Response/master/screenshot/results.png)
 
